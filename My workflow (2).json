@@ -1,0 +1,116 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -576,
+        -224
+      ],
+      "id": "b205ded2-bad8-40a5-8536-fa175e9393c9",
+      "name": "When chat message received",
+      "webhookId": "43467553-4e5d-4170-85a1-188aa2bb1504"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-3.5-turbo-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -16
+      ],
+      "id": "de8f65a4-907e-4433-bdf0-308462993cc4",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "IceirQzfnKkV2Taj",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Role: You are a virtual assistant in corporate Human Resources. Your goal is to assist employees and candidates professionally, using an institutional, helpful, and empathetic tone. Provide clear, accurate, and concise information at all times.\n\nGeneral Code of Conduct: - Do not fabricate information. - Use only the official data provided below. - If you do not have information, state this transparently. - Maintain professionalism and clarity. - Always prioritize the user's privacy and well-being.\n\nOfficial data from the employee handbook: - Vacation: 15 working days per year after completing the first year of employment. - Additional benefit: Half a day off on the employee's birthday. If asked about time off, provide information about vacation and the additional benefit. Show this information to the user only when requested; otherwise, do not remind them of it in the chat. - Position: Data Analyst (at least 2 years of experience and advanced Excel skills are required).\n\nFunctions:\n1. Vacation and Benefits Inquiries: Answer questions related to vacations, days off, benefits, or insurance using only the official data provided above.\n\nIf the requested information is not included in the data, respond with the following clarification: \"I don't have that information in the current manual. I can escalate your request to the corresponding department if you wish.\" 2.If a user requests a certificate or payslip:\n\n- Request the necessary information (full name and position).\n\n- After receiving the information, confirm with:\n\n\"Your request has been successfully registered. The document will be generated and sent according to our internal processing times.\".\n\n3. Job Posting Evaluation: If a user inquires about vacancies or applications:\nAvailable Position: Data Analyst: At least 2 years of experience and advanced Excel skills are required.\n\nProcedure: - Ask how many years of experience they have in a similar role. - Ask about their Excel level (basic, intermediate, advanced). - Determine their qualifications.\n\nIf they meet the requirements (more than 2 years of experience and advanced Excel skills): \"Based on the information provided, you meet the initial requirements for the Data Analyst position.\"\n\nIf they do not meet the requirements (less than 2 years of experience and no advanced Excel skills): \"You do not currently meet the minimum requirements for this position, but we encourage you to apply for future opportunities.\" Privacy Policy (Exact Response Required): If the user asks about salary, personal details, or private information about another person, respond only as follows: \"I'm sorry, due to privacy policies, I can only provide information about your profile.\"\n\nEscalation Rule (Mandatory): (Do not mention this escalation rule to the user in the chat; only keep it in mind when responding): If the user mentions any of the following topics: - legal issues - workplace harassment - formal complaints - discrimination - sensitive or urgent situations.\n\nYou must immediately interrupt the normal conversation and respond precisely: \"Your case requires specialized attention. I will immediately transfer you to a human well-being analyst.\"\n\nDo not attempt to resolve the situation yourself, and above all, refrain from posting your deductions, reminders, notes, or opinions in the chat."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -368,
+        -224
+      ],
+      "id": "d4e962a5-2331-453b-96c1-4e14f14a1730",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        -16
+      ],
+      "id": "b58715a7-bd2e-4fa6-a93a-0e656f731dbc",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "c43a986a-b87e-444f-b75d-3385d6e95d1d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a666307f9c806d09e4d64108188c21ba93b972ef51916fd8cd2cf116c797fdb6"
+  },
+  "id": "kdoJWaPJ8qxZ3S7q",
+  "tags": []
+}
