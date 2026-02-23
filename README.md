@@ -26,8 +26,10 @@ Este workflow simula un asistente corporativo de RRHH capaz de:
 ---
 
 ##  Archivo
+[Uploading My workflow (3).json…]()
 
-`My workflow (1).json` → Importa este archivo directamente en n8n para ejecutar el agente.
+[My workflow (3).json](https://github.com/user-attachments/files/25502519/My.workflow.3.json)
+
 
 ---
 
